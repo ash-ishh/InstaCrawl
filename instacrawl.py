@@ -36,7 +36,7 @@ def scroll_with_range(driver,n):
  
 def write_source_to_file(usr_name,driver):
     src_code = driver.page_source
-    fob = open('/home/ash-ishh/Programz/python/instacrawl/source.txt','w')
+    fob = open('/home/usr/InstaCrawl/source.txt','w')
     fob.write(usr_name+"\n")
     fob.write(src_code)
     fob.close()
@@ -76,4 +76,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("Done! Now you can excecute instacrawl.sh to download all the pictures :)")
+    print("Done! Now you can excecute InstCrawl.sh to download all the pictures :)")
