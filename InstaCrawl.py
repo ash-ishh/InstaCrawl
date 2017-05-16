@@ -51,14 +51,41 @@ def main():
     d.get('http://instagram.com/'+usr)
     
     src_code = d.page_source
-    num_of_files = re.findall(r'\"media":\s*{"count":\s*\d+',src_code)
-    num = int(re.findall(r'\d+',num_of_files[0])[0])
-    
-    print("User " + usr + " has " + str(num) + " pictures! ")
+    pattern = re.compile('\d+ Posts')
+    num = pattern.findall(src_code)[0]
+    num = int(num.split(' ')[0])
+    '''
+    not working since instagram changed its source code
+    #num_of_files = re.findall(r'\"media":\s*{"count":\s*\d+',src_code)
+    #print(num_of_files)
+    #num = int(re.findall(r'\d+',num_of_files[0])[0])
+    '''
+
+    print(usr + " has " + str(num) + " pictures! ")
+
+    path_not_exist = True
+    if (path.exists('/home/ash-ishh/Programz/python/InstaCrawl/'+usr)):
+         pass
+       #path_not_exist = False 
     time.sleep(5)
 
-    if(num > 12):
-        button = d.find_element_by_class_name('_oidfu').click() #click load more
+    if(num > 12 and  path_not_exist):
+        #button class name is frequently changed by instagram so inpect element to verify it is same.
+        #button = d.find_element_by_class_name('_oidfu').click() #click load more
+        #button = d.find_element_by_class_name("l8imhp _glz1g").click() #click load more
+        #button = d.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/a').click()
+        scroll_with_range(d,1) #scrole 1 time
+        button = d.find_element_by_link_text("Load more")
+        location = button.location
+        size = button.size
+        x,y = location['x'],location['y']
+        height,width = size['height'],size['width']
+
+        action = webdriver.common.action_chains.ActionChains(d)
+        action.move_to_element_with_offset(button, width//2, height//2) #add offset since button location is not clickable
+        action.click()
+        action.perform()
+
         scroll_with_range(d,num//12) #12 images loads per page 
  
     quit_scroll = 0
