@@ -5,3 +5,9 @@ InstaCrawl.py uses selenium.It refreshes instagram profile untill all pictures a
 then it saves the sources code to file.
 
 InstaCrawl.sh pulls all the links of pictures from source code file and downloads using wget.
+
+Requirements : 
+Chrome Browser Drivers.
+
+Note :
+Change the file path :p
